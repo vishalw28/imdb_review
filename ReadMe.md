@@ -43,3 +43,21 @@ The model analyzes surrounding words in texts (context) to create these vectors,
     - Feature Dimensions will be 300.
 
 
+# Issues -> Fixes
+1. Downgrade the python version on streamlit cloud. 
+    https://share.streamlit.io/ -> Open the app -> Manage app -> Settings -> Changed Python version to `3.11' because python3.14 doesn't support the tensorflow.
+
+2. Model file was not getting loaded.
+    - `.h5` & `.py` file should be in the same place or give the path according.
+    - while deploying on cloud it was unable to read the file. Hence read the OS path of base directory & then pass that `load_model`
+    Ref: [fix](https://github.com/vishalw28/imdb_review/commit/9583198b94d0791c9fac79ab4487fddce7034448)
+
+    model = load_model('simple_rnn_imdb.h5') # Works fine in local but not in cloud.
+
+    Hence I have to use the base path
+
+    ```
+    BASE_DIR = os.path.dirname(__file__)
+    MODEL_PATH = os.path.join(BASE_DIR, "simple_rnn_imdb.h5")
+    model = load_model(MODEL_PATH)
+    ```
