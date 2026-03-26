@@ -1,5 +1,6 @@
 # Step 1: Import Libraries & load the model
 import numpy as np
+import os
 import tensorflow as tf
 from tensorflow.keras.datasets import imdb
 from tensorflow.keras.preprocessing import sequence
@@ -11,7 +12,11 @@ reverse_word_index={value:key for key, value in word_index.items()}
 
 
 # Load the pre-trained model with relu activation
-model = load_model('simple_rnn_imdb.h5')
+
+BASE_DIR = os.path.dirname(__file__)
+MODEL_PATH = os.path.join(BASE_DIR, "simple_rnn_imdb.h5")
+
+model = load_model(MODEL_PATH)
 model.summary()
 
 # Step 2: Helper function
